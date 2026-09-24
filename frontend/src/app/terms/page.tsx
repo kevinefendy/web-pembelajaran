@@ -14,8 +14,9 @@ export default function TermsPage() {
       {/* Hero Header */}
       <section className="relative overflow-hidden border-b bg-gradient-to-b from-primary/5 via-background to-background py-14 md:py-20">
         <div className="container mx-auto px-4 max-w-4xl text-center">
-          <Badge variant="outline" className="mb-4 px-3 py-1 text-sm border-primary/30 text-primary">
-            📜 Dokumen Hukum
+          <Badge variant="outline" className="mb-4 px-3 py-1 text-sm border-primary/30 text-primary inline-flex items-center gap-1.5">
+            <FileText className="w-3.5 h-3.5" />
+            Dokumen Hukum
           </Badge>
           <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">
             Syarat & Ketentuan Penggunaan
