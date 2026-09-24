@@ -39,10 +39,6 @@ export default function ContactPage() {
       {/* Hero Header */}
       <section className="relative overflow-hidden border-b bg-gradient-to-b from-primary/5 via-background to-background py-16 md:py-24">
         <div className="container mx-auto px-4 max-w-5xl text-center">
-          <Badge variant="outline" className="mb-4 px-3 py-1 text-sm border-primary/30 text-primary inline-flex items-center gap-1.5">
-            <Phone className="w-3.5 h-3.5" />
-            Hubungi Kami
-          </Badge>
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
             Kami Siap Membantu Anda
           </h1>
