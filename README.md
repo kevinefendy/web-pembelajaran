@@ -58,7 +58,7 @@ Platform pembelajaran teknologi berbahasa Indonesia dengan kurikulum berbasis *L
 - Dilengkapi **Certificate Code** unik untuk verifikasi keabsahan secara publik.
 
 ### 6. 🔒 Autentikasi & Keamanan Tangguh
-- Autentikasi berbasis **JWT Access & Refresh Token** dengan hashing password `bcrypt`.
+- Autentikasi akun aman berbasis token terenkripsi dengan hashing password `bcrypt`.
 - Role-based Access Control (RBAC): `STUDENT`, `REVIEWER`, `INSTRUCTOR`, `ADMIN`, dan `SUPER_ADMIN`.
 - Keamanan HTTP headers dengan `helmet` dan proteksi DDoS/brute-force dengan `@nestjs/throttler`.
 
@@ -83,7 +83,7 @@ Platform pembelajaran teknologi berbahasa Indonesia dengan kurikulum berbasis *L
 - **Bahasa**: [TypeScript](https://www.typescriptlang.org/)
 - **Database ORM**: [Drizzle ORM](https://orm.drizzle.team/) & [Drizzle Kit](https://orm.drizzle.team/kit-docs/overview)
 - **Database Driver**: [postgres.js](https://github.com/porsager/postgres)
-- **Autentikasi**: [Passport.js](https://www.passportjs.org/) (`passport-jwt`, `passport-local`)
+- **Autentikasi**: [Passport.js](https://www.passportjs.org/) (Session & Token Guard)
 - **Keamanan**: `helmet`, `bcrypt`, `class-validator`, `@nestjs/throttler`
 
 ### Database & Infrastruktur
@@ -108,7 +108,7 @@ graph TD
     
     subgraph Server Layer
         NestApp --> HelmetMW["Security Middleware (Helmet, CORS, ValidationPipe)"]
-        HelmetMW --> AuthModule["Auth & JWT Guards (RBAC)"]
+        HelmetMW --> AuthModule["Auth & Security Guards (RBAC)"]
         HelmetMW --> CourseModule["Courses & Modules Controller"]
         HelmetMW --> PathModule["Learning Paths Controller"]
         
@@ -137,10 +137,10 @@ Repositori ini menggunakan arsitektur **Monorepo** dengan `npm workspaces` agar 
 website-pembelajaran/
 ├── backend/                         # Backend Service (NestJS)
 │   ├── src/
-│   │   ├── auth/                    # Modul Autentikasi (JWT, Guards, RBAC, DTOs)
+│   │   ├── auth/                    # Modul Autentikasi (Guards, RBAC, DTOs)
 │   │   │   ├── dto/                 # Data Transfer Objects (Login, Register)
-│   │   │   ├── guards/              # JWT Auth & Roles Guards
-│   │   │   ├── strategies/          # Passport JWT Strategy
+│   │   │   ├── guards/              # Auth & Roles Guards
+│   │   │   ├── strategies/          # Passport Auth Strategy
 │   │   │   ├── auth.controller.ts   # Endpoint /api/auth
 │   │   │   └── auth.service.ts      # Logika otentikasi & token lifecycle
 │   │   ├── courses/                 # Manajemen Kursus & Modul
@@ -219,19 +219,18 @@ Salin template berkas `.env.example` pada masing-masing workspace:
 # Salin berkas env
 cp backend/.env.example backend/.env
 ```
-Sesuaikan nilai pada `backend/.env`:
+Sesuaikan konfigurasi koneksi database dan port pada `backend/.env`:
 ```env
-# Koneksi PostgreSQL (ganti username, password, host, port, dan dbname)
+# Koneksi PostgreSQL (sesuaikan dengan username, password, dan nama database Anda)
 DATABASE_URL="postgresql://postgres:password@localhost:5432/learnpath?schema=public"
-
-# Rahasia Token JWT
-JWT_SECRET=super-secret-jwt-key-min-32-chars
-JWT_REFRESH_SECRET=super-secret-refresh-key-min-32-chars
 
 # Alamat Aplikasi Frontend & Port API
 FRONTEND_URL=http://localhost:3000
 PORT=4000
 ```
+
+> [!IMPORTANT]
+> **Keamanan Kunci Rahasia**: Berkas `.env` bersifat rahasia dan sudah terproteksi oleh `.gitignore`. Jangan pernah mengunggah (*commit/push*) berkas `.env` atau kunci rahasia (*secret key*) Anda ke repositori publik!
 
 #### Konfigurasi Frontend:
 ```bash
@@ -398,7 +397,7 @@ Base URL: `http://localhost:4000/api`
 - [x] Arsitektur Monorepo (Next.js 16 + NestJS 12)
 - [x] Skema database lengkap dengan Drizzle ORM (Users, Courses, Submissions, Gamification, Payments)
 - [x] Landing page interaktif & katalog kursus
-- [x] Autentikasi JWT (Login, Register, Refresh Token, Profile)
+- [x] Sistem Autentikasi Pengguna & Sesi (Login, Register, Refresh Token, Profile)
 - [x] Role-Based Access Control (RBAC Guard)
 - [ ] Integrasi webhook payment gateway Midtrans
 - [ ] Modul interaktif Code Sandbox / Code Lab in-browser

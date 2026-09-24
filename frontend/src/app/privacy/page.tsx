@@ -72,7 +72,7 @@ export default function PrivacyPage() {
             <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
               <li>Enkripsi komunikasi data menggunakan protokol <strong>HTTPS / TLS 1.3</strong>.</li>
               <li>Kata sandi pengguna diacak menggunakan algoritma *one-way cryptographic hash* (<strong>bcrypt</strong> dengan salt round tinggi) sehingga tidak dapat dibaca bahkan oleh tim pengembang kami sekalipun.</li>
-              <li>Autentikasi sesi menggunakan JSON Web Tokens (JWT) dengan masa kedaluwarsa ketat dan proteksi HTTP headers via <em>Helmet</em>.</li>
+              <li>Autentikasi sesi berbasis token terenkripsi dengan masa kedaluwarsa ketat dan proteksi HTTP headers via <em>Helmet</em>.</li>
             </ul>
           </div>
 
